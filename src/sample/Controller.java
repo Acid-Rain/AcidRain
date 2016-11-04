@@ -27,8 +27,13 @@ public class Controller implements Initializable {
     private TextField textInput;
     @FXML
     private ProgressBar lifeBar;
+<<<<<<< HEAD
+    int wordsTyped = 0; // 없앤 단어의 수
+    int life = 100; // 생명
+=======
     int wordsTyped = 0; // 자신이 타이핑 한 것을 0으로
     int life = 100; //생명의 값을 100으로
+>>>>>>> coments
 
     public int getPlayerType() {  // 플레이어타입 데이터 변환
         return playerType; // 메소드 리턴 (멤버변수타입으로)
@@ -38,6 +43,18 @@ public class Controller implements Initializable {
         this.playerType = playerType; // 리턴타입 - void 설정
     }
 
+<<<<<<< HEAD
+    private int playerType; //
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.playerType = selectController.playertype;
+        System.out.print(playerType);
+        startButton1.setOnAction(event -> { //게임 시작하는 버튼
+            startButton1.setVisible(false); //시작 버튼을 보이지 않도록 수정
+            labels = new Vector<Label>();
+            textInput.requestFocus();
+=======
     private int playerType; //플레이어타입(캐릭터)객체 변수
 
     @Override
@@ -48,6 +65,7 @@ public class Controller implements Initializable {
             startButton1.setVisible(false); // 시작버튼을 보이지않도록 수정
             labels = new Vector<Label>(); // 모든 단어들이 저장될 벡터 생성
             textInput.requestFocus(); //시작시 글씨입력칸에 커서 생성
+>>>>>>> coments
             try {
                 game(1000, 1); //1초마다 단어가 1개씩 생성되서 떨어짐
             } catch (InterruptedException e) { //예외처리가 일어날 시 쓰레드 잠시 중단
@@ -81,11 +99,19 @@ public class Controller implements Initializable {
                     for (int i = 0; i < genAmount; i++) labels.add(genWord()); // 단어를 젠하여 리스트에 추가
                 });
                 for (int i = 0; i < labels.size(); i++) { //모든 레이블을 체크하여 화면 밖으로 나갔을 경우 요소를 삭제함
+<<<<<<< HEAD
+                    if (labels.get(i).getLayoutY() > 768) {
+                        life -= 10;
+                        lifeBar.setProgress(life / 100.0f);
+                        System.out.println("Life decreased. Life : " + life + "\nProgressbar set : " + life / 100.0f);
+                        delWord(i);
+=======
                     if (labels.get(i).getLayoutY() > 768) { //단어들이 화면 Y축의 768보다 클 경우
                         life -= 10; //생명 10 감소
                         lifeBar.setProgress(life / 100.0f); // 프로그레스바는 0.0 ~ 1.0의 값을 가지므로 나누어준다
                         System.out.println("Life decreased. Life : " + life + "\nProgressba set : " + life / 100.0f); //출력
                         delWord(i); //단어 삭제
+>>>>>>> coments
                     }
                 }
                 try {
