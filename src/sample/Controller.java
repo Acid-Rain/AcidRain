@@ -131,7 +131,7 @@ public class Controller implements Initializable {
 //    }
 
     private void delWord(int index) {
-//        labels.get(index).setVisible(false);
+        labels.get(index).setVisible(false);
         Platform.runLater(() -> gamePane.getChildren().remove(labels.get(index)));
         labels.remove(index);
     }
