@@ -49,7 +49,7 @@ public class Controller implements Initializable {
             labels = new Vector<Label>(); // 모든 단어들이 저장될 벡터 생성
             textInput.requestFocus(); //시작시 글씨입력칸에 커서 생성
             try {
-                game(1000, 1); //
+                game(1000, 1); //1초마다 단어가 1개씩 생성되서 떨어짐
             } catch (InterruptedException e) { //예외처리가 일어날 시 쓰레드 잠시 중단
                 e.printStackTrace(); //예외처리가 일어난 부분 확인하는 것
             }
@@ -130,7 +130,7 @@ public class Controller implements Initializable {
 //        return false;
 //    }
 
-    private void delWord(int index) { //
+    private void delWord(int index) { //화면에 단어를 삭제하는 함수
         labels.get(index).setVisible(false); //받아온 인덱스를 보이게 됨
         Platform.runLater(() -> gamePane.getChildren().remove(labels.get(index))); //event에 저장된 Runnable들 저장된 순서에 따라 인덱스를 받아와 삭제
         labels.remove(index); //인덱스 삭제
