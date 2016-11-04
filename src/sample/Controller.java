@@ -27,41 +27,41 @@ public class Controller implements Initializable {
     private TextField textInput;
     @FXML
     private ProgressBar lifeBar;
-    int wordsTyped = 0;
-    int life = 100;
+    int wordsTyped = 0; // 자신이 타이핑 한 것을 0으로
+    int life = 100; //생명의 값을 100으로
 
-    public int getPlayerType() {
-        return playerType;
+    public int getPlayerType() {  // 플레이어타입 데이터 변환
+        return playerType; // 메소드 리턴 (멤버변수타입으로)
     }
 
-    public void setPlayerType(int playerType) {
-        this.playerType = playerType;
+    public void setPlayerType(int playerType) { // 플레이어타입 데이터 저장
+        this.playerType = playerType; // 리턴타입 - void 설정
     }
 
-    private int playerType;
+    private int playerType; //플레이어타입(캐릭터)객체 변수
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.playerType = selectController.playertype;
-        System.out.print(playerType);
+    public void initialize(URL location, ResourceBundle resources) { //URL location, ResourceBundle resources 초기화
+        this.playerType = selectController.playertype; //저장된 캐릭터를 선택하여 보여줌(?)
+        System.out.print(playerType); //캐릭터 출력
         startButton1.setOnAction(event -> { //게임 시작하는 버튼
-            startButton1.setVisible(false);
-            labels = new Vector<Label>();
-            textInput.requestFocus();
+            startButton1.setVisible(false); // 시작버튼을 보이지않도록 수정
+            labels = new Vector<Label>(); //레이블에 저장된 단어 객체 생성
+            textInput.requestFocus(); //시작시 글씨입력칸에 커서 생성
             try {
-                game(1000, 1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                game(1000, 1); //
+            } catch (InterruptedException e) { //예외처리가 일어날 시 쓰레드 잠시 중단
+                e.printStackTrace(); //예외처리가 일어난 부분 확인하는 것
             }
         });
 
-        textInput.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER)) {
-                System.out.println("Enter Key Pressed.");
+        textInput.setOnKeyPressed(event -> { ///event에 있는 값을 받아서
+            if (event.getCode().equals(KeyCode.ENTER)) { //event에 있는 getCode에서 KeyCode가 엔터이면
+                System.out.println("Enter Key Pressed."); //출력
                 for (int i = 0; i < labels.size(); i++) { //모든 레이블을 체크하여 글자가 일치하는 요소가 있을 경우 요소를 지우고 입력칸을 비움
-                    if (labels.get(i).getText().equals(textInput.getText())) {
-                        delWord(i);
-                        textInput.setText("");
+                    if (labels.get(i).getText().equals(textInput.getText())) { //레이블에 입력한 것과 떨어지는 요소중 글자가 같게된다면
+                        delWord(i); // 단어 삭제
+                        textInput.setText(""); // 빈칸
                     }
                 }
             }
@@ -70,37 +70,37 @@ public class Controller implements Initializable {
 
     private void game(int interval, int genAmount) throws InterruptedException { // interval:단어가 떨어지는 간격(ms) genAmount:페이즈마다 생성되는 단어 수
 //        private Task<Void> task = null;
-        life = 100;
-        lifeBar.setProgress(life / 100);
+        life = 100; //생명을 100으로
+        lifeBar.setProgress(life / 100); //게임에 있는 생명바 표시
 //        lifeBar.progressProperty().bind(task.progressProperty());
-        wordsTyped = 0;
+        wordsTyped = 0; //자신이 타이핑한 것이 0
         new Thread(() -> {
-            while (life > 0) {
-                Platform.runLater(() -> {
+            while (life > 0) { //생명이 0보다 클 동안
+                Platform.runLater(() -> { //작업 스레드가 작업 UI를 직접 변경이 불가하므로 event에 저장된 Runnable들은 저장된 순서에 따라 불러옴
                     labels.forEach(label -> label.setLayoutY(label.getLayoutY() + 50)); // 단어를 아래로 한 단위 이동
                     for (int i = 0; i < genAmount; i++) labels.add(genWord()); // 단어를 젠하여 리스트에 추가
                 });
                 for (int i = 0; i < labels.size(); i++) { //모든 레이블을 체크하여 화면 밖으로 나갔을 경우 요소를 삭제함
-                    if (labels.get(i).getLayoutY() > 768) {
-                        life -= 10;
-                        lifeBar.setProgress(life / 100.0f);
-                        System.out.println("Life decreased. Life : " + life + "\nProgressba set : " + life / 100.0f);
-                        delWord(i);
+                    if (labels.get(i).getLayoutY() > 768) { //단어들이 화면 Y축의 768보다 클 경우
+                        life -= 10; //생명 10 감소
+                        lifeBar.setProgress(life / 100.0f); //생명의 100을 나눠가짐
+                        System.out.println("Life decreased. Life : " + life + "\nProgressba set : " + life / 100.0f); //출력
+                        delWord(i); //단어 삭제
                     }
                 }
                 try {
-                    Thread.sleep(interval);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.sleep(interval); //Interval의 값만큼 시간 간격을 준다.
+                } catch (InterruptedException e) { //예외처리가 일어날 시 쓰레드 잠시 중단
+                    e.printStackTrace(); //예외처리가 일어난 부분 확인하는 것
                 }
             }
-            labels.forEach(Label -> Label.setVisible(false));
-            labels.clear();
-            gamePane.getChildren().removeAll();
+            labels.forEach(Label -> Label.setVisible(false)); //단어 각각의 요소에 안보이게 하는 것을 줌
+            labels.clear(); // 단어가 깨끗하게 사라짐
+            gamePane.getChildren().removeAll(); //화면에 저장된 단어와 동일한 단어 삭제
 
 
-            startButton1.setVisible(true);
-        }).start();
+            startButton1.setVisible(true); //시작버튼을 보이도록 수정
+        }).start(); // 게임 시작
         /*
         게임을 진행하는 스레드를 생성합니다.
         UI를 관리하는 스레드 자체에 sleep을 주게 되면 UI가 모래시계가 돌면서 멈추는 현상이 발생합니다.
@@ -110,14 +110,14 @@ public class Controller implements Initializable {
     }
 
     private Label genWord() { //화면 상단에 단어를 생성하는 함수
-        System.out.println("Genning Word.");
-        Label l = new Label();
-        gamePane.getChildren().add(l);
-        l.setText(words[(int) (Math.random() * 426)]);
-        l.setLayoutY(0);
-        l.setLayoutX(new Random().nextInt(1000));
-        l.setVisible(true);
-        return l;
+        System.out.println("Genning Word."); //출력
+        Label l = new Label(); //label
+        gamePane.getChildren().add(l); //
+        l.setText(words[(int) (Math.random() * 426)]); //
+        l.setLayoutY(0); //
+        l.setLayoutX(new Random().nextInt(1000)); //
+        l.setVisible(true); //
+        return l; //
     }
 
 //    private boolean isExists(List<Integer> l, int num){
@@ -130,9 +130,9 @@ public class Controller implements Initializable {
 //        return false;
 //    }
 
-    private void delWord(int index) {
-        labels.get(index).setVisible(false);
-        Platform.runLater(() -> gamePane.getChildren().remove(labels.get(index)));
-        labels.remove(index);
+    private void delWord(int index) { //
+        labels.get(index).setVisible(false); //
+        Platform.runLater(() -> gamePane.getChildren().remove(labels.get(index))); //
+        labels.remove(index); //
     }
 }
