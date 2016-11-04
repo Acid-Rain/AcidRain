@@ -113,11 +113,11 @@ public class Controller implements Initializable {
         System.out.println("Genning Word."); //출력
         Label l = new Label(); //label 단어 객체 생성
         gamePane.getChildren().add(l); //화면에 단어객체 추가
-        l.setText(words[(int) (Math.random() * 426)]); //0보다 크고 425보다 작은 범위에서 객체받음
+        l.setText(words[(int) (Math.random() * 426)]); // 단어 배열에서 단어를 랜덤으로 설정
         l.setLayoutY(0); //Y축이 0이 됨
         l.setLayoutX(new Random().nextInt(1000)); //X축좌표 1000범위에서 랜덤으로 객체 생성
-        l.setVisible(true); //단어객체가 화면에 보임
-        return l; //단어 객체 리턴
+        l.setVisible(true); //단어객체를 화면에 표시
+        return l; //생성한 단어 객체 리턴
     }
 
 //    private boolean isExists(List<Integer> l, int num){
