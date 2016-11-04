@@ -45,7 +45,7 @@ public class Controller implements Initializable {
         this.playerType = selectController.playertype;
         System.out.print(playerType);
         startButton1.setOnAction(event -> { //게임 시작하는 버튼
-            startButton1.setVisible(false);
+            startButton1.setVisible(false); //시작 버튼을 보이지 않도록 수정
             labels = new Vector<Label>();
             textInput.requestFocus();
             try {
