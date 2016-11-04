@@ -27,8 +27,8 @@ public class Controller implements Initializable {
     private TextField textInput;
     @FXML
     private ProgressBar lifeBar;
-    int wordsTyped = 0;
-    int life = 100;
+    int wordsTyped = 0; //워드타이핑의 값을 0으로 줌
+    int life = 100; //생명
 
     public int getPlayerType() {
         return playerType;
@@ -46,7 +46,7 @@ public class Controller implements Initializable {
         System.out.print(playerType);
         startButton1.setOnAction(event -> { //게임 시작하는 버튼
             startButton1.setVisible(false); //시작 버튼을 보이지 않도록 수정
-            labels = new Vector<Label>();
+            labels = new Vector<Label>(); //
             textInput.requestFocus();
             try {
                 game(1000, 1);
