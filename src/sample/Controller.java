@@ -111,13 +111,13 @@ public class Controller implements Initializable {
 
     private Label genWord() { //화면 상단에 단어를 생성하는 함수
         System.out.println("Genning Word."); //출력
-        Label l = new Label(); //label
-        gamePane.getChildren().add(l); //
-        l.setText(words[(int) (Math.random() * 426)]); //
-        l.setLayoutY(0); //
-        l.setLayoutX(new Random().nextInt(1000)); //
-        l.setVisible(true); //
-        return l; //
+        Label l = new Label(); //label 단어 객체 생성
+        gamePane.getChildren().add(l); //화면에 단어객체 추가
+        l.setText(words[(int) (Math.random() * 426)]); //0보다 크고 425보다 작은 범위에서 객체받음
+        l.setLayoutY(0); //Y축이 0이 됨
+        l.setLayoutX(new Random().nextInt(1000)); //X축좌표 1000범위에서 랜덤으로 객체 생성
+        l.setVisible(true); //단어객체가 화면에 보임
+        return l; //단어 객체 리턴
     }
 
 //    private boolean isExists(List<Integer> l, int num){
@@ -131,8 +131,8 @@ public class Controller implements Initializable {
 //    }
 
     private void delWord(int index) { //
-        labels.get(index).setVisible(false); //
-        Platform.runLater(() -> gamePane.getChildren().remove(labels.get(index))); //
-        labels.remove(index); //
+        labels.get(index).setVisible(false); //받아온 인덱스를 보이게 됨
+        Platform.runLater(() -> gamePane.getChildren().remove(labels.get(index))); //event에 저장된 Runnable들 저장된 순서에 따라 인덱스를 받아와 삭제
+        labels.remove(index); //인덱스 삭제
     }
 }
