@@ -1,5 +1,7 @@
 # AcidRain
 
+![sample](https://github.com/Acid-Rain/AcidRain/raw/master/src/sample/img/sample.png)
+
 ## Synopsis
 
 This is an Java project which is developed by korean high school students.
@@ -24,14 +26,13 @@ Web Programing Class
 
 2302 곽희빈 - program test, commenting
 
-2333 최명원 - main programmer
-
 2312 문설하 - art designer
 
 2319 이상민 - UI designer
 
 2325 이지환 - dictionary data
 
+2333 최명원 - main programmer
 
 ## License
 

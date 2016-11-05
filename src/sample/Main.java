@@ -32,7 +32,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryST = primaryStage;
         GridPane root = FXMLLoader.load(getClass().getResource("start.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Acidrain");
         Scene scene = new Scene(root, 1024, 768);
         primaryStage.setScene(scene);
         primaryStage.show();
