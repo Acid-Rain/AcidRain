@@ -132,7 +132,7 @@ public class Controller implements Initializable {
 
     private void delWord(int index) { //화면에 단어를 삭제하는 함수
         labels.get(index).setVisible(false); // 받아온 인덱스의 단어를 보이지 않도록 설정
-        Platform.runLater(() -> gamePane.getChildren().remove(labels.get(index))); 
+//        Platform.runLater(() -> gamePane.getChildren().remove(labels.get(index)));
         labels.remove(index); //인덱스 삭제
     }
 }

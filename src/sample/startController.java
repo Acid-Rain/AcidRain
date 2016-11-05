@@ -26,6 +26,7 @@ public class startController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         startButton.setOnMouseClicked(event -> {
             try {
                 GridPane root = FXMLLoader.load(getClass().getResource("select.fxml"));
