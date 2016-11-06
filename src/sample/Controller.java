@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
@@ -30,20 +32,32 @@ public class Controller implements Initializable {
     int wordsTyped = 0; // 없앤 단어의 수
     int life = 100; // 생명
 
-    public int getPlayerType() {  // 플레이어타입 데이터 변환
-        return playerType; // 메소드 리턴 (멤버변수타입으로)
+    public ImageView getPlayer() {
+        return player;
     }
 
-    public void setPlayerType(int playerType) { // 플레이어타입 데이터 저장
-        this.playerType = playerType; // 리턴타입 - void 설정
+    public void setPlayer(ImageView player) {
+        this.player = player;
     }
 
-    private int playerType; //플레이어타입(캐릭터)객체 변수
+    private ImageView player; //플레이어타입(캐릭터)객체 변수
+
+    String appMain = System.getProperty("user.dir");
+    String gender;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.playerType = selectController.playertype; //플레이어 선택 화면에서 캐릭터 정보를 넘겨받아옴
-        System.out.print(playerType); //캐릭터 출력
+
+        player = selectController.playertype; //플레이어 선택 화면에서 캐릭터 정보를 넘겨받아옴
+        System.out.print(player.getImage().impl_getUrl());
+        gender = player.getImage().impl_getUrl().endsWith("woman_excited.png")?"woman":"man";
+        player.setFitWidth(150);
+        player.setFitHeight(150);
+        player.setLayoutX(1024 - 150);
+        player.setLayoutY(768 - 150);
+        player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_normal.png"));
+        gamePane.getChildren().add(player);
+
         startButton1.setOnAction(event -> { //게임 시작하는 버튼에 이벤트 바인딩
             startButton1.setVisible(false); // 시작버튼을 보이지않도록 수정
             labels = new Vector<Label>(); // 모든 단어들이 저장될 벡터 생성
@@ -62,7 +76,9 @@ public class Controller implements Initializable {
                     if (labels.get(i).getText().equals(textInput.getText())) { //레이블에 입력한 것과 떨어지는 요소중 글자가 같게된다면
                         delWord(i); // 단어 삭제
                         textInput.setText(""); // 단어 입력칸을 빈칸으로
+                        player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_smile.png"));
                     }
+                    else player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_upset.png"));
                 }
             }
         });
@@ -84,7 +100,7 @@ public class Controller implements Initializable {
                     if (labels.get(i).getLayoutY() > 768) { //단어들이 화면 Y축의 768보다 클 경우
                         life -= 10; //생명 10 감소
                         lifeBar.setProgress(life / 100.0f); // 프로그레스바는 0.0 ~ 1.0의 값을 가지므로 나누어준다
-                        System.out.println("Life decreased. Life : " + life + "\nProgressba set : " + life / 100.0f); //출력
+                        System.out.println("Life decreased. Life : " + life + "\nProgressbar set : " + life / 100.0f); //출력
                         delWord(i); //단어 삭제
                     }
                 }
@@ -97,8 +113,7 @@ public class Controller implements Initializable {
             labels.forEach(Label -> Label.setVisible(false)); //모든 단어를 숨긴다
             labels.clear(); // labels의 모든 요소를 삭제
             gamePane.getChildren().removeAll(); //gamepane의 모든 요소 삭제
-
-
+            player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_excited.png"));
             startButton1.setVisible(true); //시작버튼을 보이도록 수정
         }).start(); // 스레드를 시작
         /*
