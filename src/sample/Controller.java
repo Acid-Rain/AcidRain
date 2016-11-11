@@ -10,18 +10,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.InterfaceAddress;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -46,6 +46,7 @@ public class Controller implements Initializable {
     int wordsTyped = 0; // 없앤 단어의 수
     int life = 100; // 생명
 
+
     public ImageView getPlayer() {
         return player;
     }
@@ -58,6 +59,10 @@ public class Controller implements Initializable {
 
     String appMain = System.getProperty("user.dir");
     String gender;
+
+    String ssound = "file:"+appMain+"/src/sample/sound.mp3";
+    Media sound = new Media(ssound);
+    MediaPlayer mediaPlayer = new MediaPlayer(sound);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,7 +89,7 @@ public class Controller implements Initializable {
 
         startButton1.setOnAction(event -> { //게임 시작하는 버튼에 이벤트 바인딩
             startButton1.setVisible(false); // 시작버튼을 보이지않도록 수정
-            Texts = new Vector<Text>(); // 모든 단어들이 저장될 벡터 생성
+            Texts = new Vector<>(); // 모든 단어들이 저장될 벡터 생성
             textInput.requestFocus(); //시작시 글씨입력칸에 커서 생성
             try {
                 game(2000, 1); //2초마다 단어가 1개씩 생성되서 떨어짐
@@ -97,28 +102,38 @@ public class Controller implements Initializable {
             if (event.getCode().equals(KeyCode.ENTER)) { //event에 있는 getCode에서 KeyCode가 엔터이면
                 System.out.println("Enter Key Pressed."); //출력
                 boolean isCorrect = false;
+                String tmp = "";
                 for (int i = 0; i < Texts.size(); i++) { //모든 레이블을 체크하여 글자가 일치하는 요소가 있을 경우 요소를 지우고 입력칸을 비움
                     if (Texts.get(i).getText().equals(textInput.getText())) { //레이블에 입력한 것과 떨어지는 요소중 글자가 같게된다면
                         delWord(i); // 단어 삭제
+                        tmp = textInput.getText();
                         textInput.setText(""); // 단어 입력칸을 빈칸으로
                         isCorrect = true;
                     }
                 }
                 if(isCorrect){
                     player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_laughing.png"));
-                    if(textInput.getText().length() >= 8) {
+                    if(tmp.length() >= 7) {
                         score.setText(String.valueOf(Integer.parseInt(score.getText()) + 500));
-                        life += 10; //생명 10 감소
+                        System.out.println("Life increased. Life : " + life + "\nProgressbar set : " + life / 100.0f); //출력
+                        life += 10; //생명 10 증가
                         lifeBar.setProgress(life / 100.0f); // 프로그레스바는 0.0 ~ 1.0의 값을 가지므로 나누어준다
+                        tmp = "";
                     }
                     else score.setText(String.valueOf(Integer.parseInt(score.getText()) + 100));
                 } else player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_upset.png"));
+            }
+            else if((event.getCode().equals(KeyCode.ESCAPE))){
+                textInput.setText(""); // 단어 입력칸을 빈칸으로
             }
         });
     }
 
     private void game(int interval, int genAmount) throws InterruptedException { // interval:단어가 떨어지는 간격(ms) genAmount:페이즈마다 생성되는 단어 수
 //        private Task<Void> task = null;
+
+        mediaPlayer.play();
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
         Interval = interval;
         score.setText("0");
         life = 100; //생명을 100으로
@@ -175,7 +190,7 @@ public class Controller implements Initializable {
         l.setLayoutX(new Random().nextInt(1000)); //X축좌표 1000범위에서 랜덤으로 객체 생성
         DropShadow borderGlow = new DropShadow();
         borderGlow.setColor(Color.AQUA);
-        if(l.getText().length() >= 8){
+        if(l.getText().length() >= 7){
             borderGlow.setColor(Color.RED);
         }
         borderGlow.setOffsetX(0f);
