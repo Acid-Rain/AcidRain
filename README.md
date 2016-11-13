@@ -32,7 +32,7 @@ Web Programing Class
 
 2325 이지환 - dictionary data
 
-2333 최명원 - main programmer
+2333 최명원 - programmer
 
 ## License
 
