@@ -24,7 +24,7 @@ Korea Digital Media High School
 
 Web Programing Class
 
-2302 곽희빈 - program test, commenting
+2302 곽희빈 - programmer, commenting
 
 2312 문설하 - art designer
 
