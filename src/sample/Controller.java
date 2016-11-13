@@ -57,11 +57,9 @@ public class Controller implements Initializable {
 
     private ImageView player; //플레이어타입(캐릭터)객체 변수
 
-    String appMain = System.getProperty("user.dir");
     String gender;
 
-    String ssound = "file:"+appMain+"/src/sample/sound.mp3";
-    Media sound = new Media(ssound);
+    Media sound = new Media("file:src/sample/sound.mp3");
     MediaPlayer mediaPlayer = new MediaPlayer(sound);
 
     @Override
@@ -84,7 +82,7 @@ public class Controller implements Initializable {
         player.setFitHeight(150);
         player.setLayoutX(1024 - 150);
         player.setLayoutY(768 - 150);
-        player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_normal.png"));
+        player.setImage(new Image("file:src/sample/img/"+gender+"_normal.png"));
         gamePane.getChildren().add(player);
 
         startButton1.setOnAction(event -> { //게임 시작하는 버튼에 이벤트 바인딩
@@ -112,7 +110,7 @@ public class Controller implements Initializable {
                     }
                 }
                 if(isCorrect){
-                    player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_laughing.png"));
+                    player.setImage(new Image("file:src/sample/img/"+gender+"_laughing.png"));
                     if(tmp.length() >= 7) {
                         score.setText(String.valueOf(Integer.parseInt(score.getText()) + 500));
                         System.out.println("Life increased. Life : " + life + "\nProgressbar set : " + life / 100.0f); //출력
@@ -121,7 +119,7 @@ public class Controller implements Initializable {
                         tmp = "";
                     }
                     else score.setText(String.valueOf(Integer.parseInt(score.getText()) + 100));
-                } else player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_upset.png"));
+                } else player.setImage(new Image("file:src/sample/img/"+gender+"_upset.png"));
             }
             else if((event.getCode().equals(KeyCode.ESCAPE))){
                 textInput.setText(""); // 단어 입력칸을 빈칸으로
@@ -153,7 +151,7 @@ public class Controller implements Initializable {
                         lifeBar.setProgress(life / 100.0f); // 프로그레스바는 0.0 ~ 1.0의 값을 가지므로 나누어준다
                         System.out.println("Life decreased. Life : " + life + "\nProgressbar set : " + life / 100.0f); //출력
                         delWord(i); //단어 삭제
-                        player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_upset.png"));
+                        player.setImage(new Image("file:src/sample/img/"+gender+"_upset.png"));
                     }
                 }
                 try {
@@ -169,7 +167,7 @@ public class Controller implements Initializable {
             Texts.forEach(Text -> Text.setVisible(false)); //모든 단어를 숨긴다
             Texts.clear(); // Texts의 모든 요소를 삭제
             gamePane.getChildren().removeAll(); //gamepane의 모든 요소 삭제
-            player.setImage(new Image("file:"+appMain+"/src/sample/img/"+gender+"_excited.png"));
+            player.setImage(new Image("file:src/sample/img/"+gender+"_excited.png"));
             startButton1.setVisible(true); //시작버튼을 보이도록 수정
         }).start(); // 스레드를 시작
         /*
