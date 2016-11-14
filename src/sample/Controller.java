@@ -59,8 +59,8 @@ public class Controller implements Initializable {
 
     String gender;
 
-    Media sound = new Media("file:src/sample/sound.mp3");
-    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//    Media sound = new Media("file:src/sample/sound.mp3");
+//    MediaPlayer mediaPlayer = new MediaPlayer(sound);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -130,8 +130,8 @@ public class Controller implements Initializable {
     private void game(int interval, int genAmount) throws InterruptedException { // interval:단어가 떨어지는 간격(ms) genAmount:페이즈마다 생성되는 단어 수
 //        private Task<Void> task = null;
 
-        mediaPlayer.play();
-        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+//        mediaPlayer.play();
+//        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
         Interval = interval;
         score.setText("0");
         life = 100; //생명을 100으로
